@@ -1,0 +1,5 @@
+Capfile
+config/deploy/*
+config/deploy.rb
+lib/capistrano/*
+.ruby-version
