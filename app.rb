@@ -1,5 +1,8 @@
+$: << File.expand_path('../', __FILE__)
+
 require 'sinatra'
 require 'sinatra/contrib'
+require 'lib/sharp.rb'
 
 set :slim, :layout_options => { :views => 'views/layouts' }
 
@@ -11,33 +14,10 @@ class Sharp < Sinatra::Application
     # dont_reload '/path/to/other/file'
   end
 
-  helpers MarkdownHelpers
+  helpers Helpers::Markdown
   register Sinatra::Contrib
 
   set :posts, settings.views + '/posts'
-
-  module MarkdownHelpers
-
-    def markdown(content=nil)
-      @markdown ||= markdown_engine
-      @markdown.render(content)
-    end
-
-    private
-    def renderer(options={})
-      options.merge!({with_toc_data: true, escape_html: true})
-      Redcarpet::Render::HTML.new options
-    end
-
-    def markdown_engine(renderer=renderer, options={})
-      options.merge!({
-        no_intra_emphasis: true,
-        fenced_code_blocks: true,
-        autolink: true
-      })
-      @markdown = Redcarpet::Markdown.new(renderer, options)
-    end
-  end
 
   get '/' do
     'Hello world!'
