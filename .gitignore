@@ -2,5 +2,6 @@
 Capfile
 config/deploy/*
 config/deploy.rb
+config/puma.rb
 lib/capistrano/*
 .ruby-version
